@@ -22,6 +22,12 @@ describe Cabinet::Local do
     cl.get(file_name).should eql(file_content)
   end
 
+  it "should not overwrite file" do
+  end
+
+  it "should overwrite file if :force => true" do
+  end
+
   it "should gzip file" do
     gz_file_name = file_name + '.gz'
     cl.gzip(gz_file_name, file_content)
