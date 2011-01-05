@@ -1,0 +1,3 @@
+module Cabinet
+  # Your code goes here...
+end
