@@ -16,7 +16,7 @@ module Cabinet
     end
 
     def delete(file_or_regexp)
-      File.delete Dir.glob(dir + file_or_regexp).join(',')
+      File.delete *Dir.glob(dir + file_or_regexp)
     end
 
     def exists?(file)
