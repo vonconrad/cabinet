@@ -6,20 +6,20 @@ describe Cabinet::Local do
   file_content = (0...50).map{('a'..'z').to_a[rand(26)]}.join
 
   it "should create file" do
-    cl.put(file_name, file_content).should eql(file_content.length)
+    cl.put(file_name, file_content).should == file_content.length
   end
 
   it "should confirm file exists" do
-    cl.exists?(file_name).should eql(true)
+    cl.exists?(file_name).should == true
   end
   
   it "should confirm file does not exist" do
     random_string = file_content
-    cl.exists?(random_string).should eql(false)
+    cl.exists?(random_string).should == false
   end
 
   it "should read file" do
-    cl.get(file_name).should eql(file_content)
+    cl.get(file_name).should == file_content
   end
 
   it "should list files" do
@@ -34,12 +34,12 @@ describe Cabinet::Local do
   it "should gzip file" do
     gz_file_name = file_name + '.gz'
     cl.gzip(gz_file_name, file_content)
-    Zlib::GzipReader.open("/tmp/#{gz_file_name}") {|gz| gz.read}.should eql(file_content)
+    Zlib::GzipReader.open("/tmp/#{gz_file_name}") {|gz| gz.read}.should == file_content
     cl.delete(gz_file_name)
   end
 
   it "should delete file" do
     cl.delete(file_name)
-    cl.exists?(file_name).should eql(false)
+    cl.exists?(file_name).should == false
   end
 end
