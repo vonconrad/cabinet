@@ -22,6 +22,9 @@ describe Cabinet::Local do
     cl.get(file_name).should eql(file_content)
   end
 
+  it "should list files" do
+  end
+
   it "should not overwrite file" do
   end
 
