@@ -1,0 +1,9 @@
+= Cabinet
+
+Cabinet is a gem for managing local and remote files through a nice and Ruby-esque interface.
+
+More information is coming soon!
+
+== License
+
+Cabinet is released under the MIT license, which can be found in LICENSE.
