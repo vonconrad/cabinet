@@ -3,7 +3,7 @@ module Cabinet
     attr_accessor :dir
 
     def initialize(root_dir)
-      self.dir = root_dir
+      self.dir = root_dir.chomp('/') + '/'
     end
 
     def get(file)
