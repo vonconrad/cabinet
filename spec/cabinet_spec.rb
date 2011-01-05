@@ -42,4 +42,10 @@ describe Cabinet::Local do
     cl.delete(file_name)
     cl.exists?(file_name).should == false
   end
+
+  it "should bulk delete files" do
+    (1..3).each {|n|cl.put("#{file_name}.#{n}", file_content)}
+    cl.delete("#{file_name}*")
+    (1..3).inject([]) {|arr, n| arr << cl.exists?("#{file_name}.#{n}")}.should == [false, false, false]
+  end
 end
