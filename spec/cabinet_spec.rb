@@ -3,7 +3,7 @@ require 'cabinet'
 describe Cabinet::Local do
   cl           = Cabinet::Local.new('/tmp')
   file_name    = 'cabinet.test'
-  file_content = 'Test content!'
+  file_content = (0...50).map{('a'..'z').to_a[rand(26)]}.join
 
   it "should create file" do
     cl.put(file_name, file_content).should eql(file_content.length)
