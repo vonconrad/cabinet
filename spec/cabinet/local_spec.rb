@@ -23,14 +23,11 @@ describe Cabinet::Local do
     @cl.get(@file_name).should == @file_content
   end
 
-  it "should list files" do
-  end
+  it "should list files"
 
-  it "should not overwrite file" do
-  end
+  it "should not overwrite file"
 
-  it "should overwrite file if :force => true" do
-  end
+  it "should overwrite file if :force => true"
 
   it "should gzip file" do
     gz_file_name = @file_name + '.gz'
