@@ -1,14 +1,29 @@
 require 'cabinet'
 
 describe Cabinet::Local do
-  file_content = "Test content!"
-  f = Cabinet::Local.new('/tmp')
-  
+  cl           = Cabinet::Local.new('/tmp')
+  file_name    = 'cabinet.test'
+  file_content = 'Test content!'
+
   it "should create file" do
-    f.put('cabinet.test', file_content).should eql(file_content.length)
+    cl.put(file_name, file_content).should eql(file_content.length)
+  end
+
+  it "should confirm file exists" do
+    cl.exists?(file_name).should eql(true)
   end
   
+  it "should confirm file does not exist" do
+    random_string = (0...50).map{('a'..'z').to_a[rand(26)]}.join
+    cl.exists?(random_string).should eql(false)
+  end
+
   it "should read file" do
-    f.get('cabinet.test').should eql(file_content)
+    cl.get(file_name).should eql(file_content)
+  end
+
+  it "should delete file" do
+    cl.delete(file_name)
+    cl.exists?(file_name).should eql(false)
   end
 end
