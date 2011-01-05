@@ -22,6 +22,13 @@ describe Cabinet::Local do
     cl.get(file_name).should eql(file_content)
   end
 
+  it "should gzip file" do
+    gz_file_name = file_name + '.gz'
+    cl.gzip(gz_file_name, file_content)
+    Zlib::GzipReader.open("/tmp/#{gz_file_name}") {|gz| gz.read}.should eql(file_content)
+    cl.delete(gz_file_name)
+  end
+
   it "should delete file" do
     cl.delete(file_name)
     cl.exists?(file_name).should eql(false)
