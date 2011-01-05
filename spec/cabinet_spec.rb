@@ -14,7 +14,7 @@ describe Cabinet::Local do
   end
   
   it "should confirm file does not exist" do
-    random_string = (0...50).map{('a'..'z').to_a[rand(26)]}.join
+    random_string = file_content
     cl.exists?(random_string).should eql(false)
   end
 
