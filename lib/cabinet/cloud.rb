@@ -16,7 +16,7 @@ module Cabinet
 
     def list(regexp=/.*/)
       container.files.reload
-      container.files.select{|f| f.key.match(regexp)}.to_a
+      container.files.select{|f| f.key.match(regexp)}.to_a.map(&:key)
     end
 
     def put(name, content)
