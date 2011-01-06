@@ -62,7 +62,7 @@ module Cabinet
 
     def gzip(name, content)
       name  = name.gsub(/(.+?)(\.gz)?$/, '\1.gz')
-      local = "#{Rails.root}/tmp/#{name}"
+      local = "/tmp/#{name}"
 
       File.open(local, 'w') do |f|
         gz = Zlib::GzipWriter.new(f)
