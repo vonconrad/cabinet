@@ -66,5 +66,9 @@ describe Cabinet::Cloud do
     @cc.exists?(@@file_name).should == false
   end
 
-  it "should bulk delete files"
+  it "should bulk delete files" do
+    (1..3).each {|n| @cc.put("#{@@file_name}.#{n}", @@file_content)}
+    @cc.delete(/#{@@file_name}/)
+    (1..3).inject([]) {|arr, n| arr << @cc.exists?("#{@@file_name}.#{n}")}.should == [false, false, false]
+  end
 end
