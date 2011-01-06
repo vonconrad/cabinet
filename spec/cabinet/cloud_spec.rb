@@ -22,7 +22,11 @@ describe Cabinet::Cloud do
     @cc.get(@@file_name).should == @@file_content
   end
 
-  it "should list files"
+  it "should list files" do
+    @cc.list.should include(@@file_name)
+    @cc.list(/#{@@file_name}/).should include(@@file_name)
+    @cc.list(/#{@@file_content}/).should == []
+  end
 
   it "should not overwrite file"
 
