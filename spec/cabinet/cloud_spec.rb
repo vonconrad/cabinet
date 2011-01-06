@@ -48,7 +48,18 @@ describe Cabinet::Cloud do
 
   it "should overwrite file if :force => true"
 
-  it "should gzip file"
+  it "should gzip file" do
+    gz_file_name = @@file_name + '.gz'
+    File.unlink("/tmp/#{gz_file_name}") if File.exists?("/tmp/#{gz_file_name}")
+
+    @cc.gzip(gz_file_name, @@file_content)
+    @cc.copy_to(:local, gz_file_name)
+
+    Zlib::GzipReader.open("/tmp/#{gz_file_name}") {|gz| gz.read}.should == @@file_content
+
+    @cc.delete(gz_file_name)
+    File.unlink("/tmp/#{gz_file_name}")
+  end
 
   it "should delete file" do
     @cc.delete(@@file_name)
