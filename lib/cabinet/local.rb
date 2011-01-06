@@ -12,7 +12,7 @@ module Cabinet
     end
 
     def put(file, content)
-      File.open(dir + file, 'wb') { |f| f.write(content) }
+      File.open(dir + file, 'wb') { |f| f.write(content) } == content.length
     end
 
     def delete(file_or_regexp)
