@@ -28,6 +28,22 @@ describe Cabinet::Cloud do
     @cc.list(/#{@@file_content}/).should == []
   end
 
+  it "should copy file to local filesystem using object" do
+    cl = Cabinet::Local.new('/tmp')
+    cl.delete(@@file_name) if cl.exists?(@@file_name)
+
+    @cc.copy_to(cl, @@file_name)
+    cl.exists?(@@file_name).should == true
+    cl.delete(@@file_name)
+  end
+
+  it "should copy file to local filesystem using symbol" do
+    File.unlink("/tmp/#{@@file_name}") if File.exists?("/tmp/#{@@file_name}")
+    @cc.copy_to(:local, @@file_name)
+    File.exists?("/tmp/#{@@file_name}").should == true
+    File.unlink("/tmp/#{@@file_name}")
+  end
+
   it "should not overwrite file"
 
   it "should overwrite file if :force => true"
