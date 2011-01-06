@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cabinet (0.0.1)
+    cabinet (0.1.1)
       fog (~> 0.3.30)
 
 GEM
@@ -9,7 +9,7 @@ GEM
   specs:
     builder (3.0.0)
     diff-lcs (1.1.2)
-    excon (0.3.6)
+    excon (0.3.7)
     fog (0.3.34)
       builder
       excon (>= 0.3.6)
