@@ -20,7 +20,11 @@ module Cabinet
     end
 
     def put(name, content)
-      container.files.create(:key => name, :body => content)
+      begin
+        container.files.create(:key => name, :body => content).content_length == content.length
+      rescue
+        false
+      end
     end
 
     def delete(name_or_regexp)
