@@ -14,7 +14,7 @@ module Cabinet
       file(name).body
     end
 
-    def list(regexp)
+    def list(regexp=/.*/)
       container.files.reload
       container.files.select{|f| f.key.match(regexp)}.to_a
     end
