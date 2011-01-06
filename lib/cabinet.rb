@@ -1,3 +1,5 @@
+require 'pathname'
+
 module Cabinet; end
 
 dir = Pathname(__FILE__).dirname.expand_path
