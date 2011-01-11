@@ -19,6 +19,7 @@ GEM
       net-ssh (>= 2.0.23)
       nokogiri (>= 1.4.4)
       ruby-hmac
+    forgery (0.3.6)
     formatador (0.0.16)
     json (1.4.6)
     mime-types (1.16)
@@ -40,4 +41,5 @@ PLATFORMS
 DEPENDENCIES
   cabinet!
   fog (~> 0.3.30)
+  forgery
   rspec (~> 2.3.0)
