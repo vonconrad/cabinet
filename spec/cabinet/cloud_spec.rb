@@ -22,6 +22,12 @@ describe Cabinet::Cloud do
     @cc.get(@@file_name).should == @@file_content
   end
 
+  it "should append file" do
+    extra_content = Forgery(:lorem_ipsum).text(:paragraph)
+    @cc.append(@@file_name, extra_content).should == true
+    @cc.get(@@file_name).should == @@file_content + extra_content
+  end
+
   it "should list files" do
     @cc.list.should include(@@file_name)
     @cc.list(/#{@@file_name}/).should include(@@file_name)

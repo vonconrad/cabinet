@@ -21,6 +21,12 @@ describe Cabinet::Local do
     @cl.get(@@file_name).should == @@file_content
   end
 
+  it "should append file" do
+    extra_content = Forgery(:lorem_ipsum).text(:paragraph)
+    @cl.append(@@file_name, extra_content).should == true
+    @cl.get(@@file_name).should == @@file_content + extra_content
+  end
+
   it "should list files"
 
   it "should not overwrite file"

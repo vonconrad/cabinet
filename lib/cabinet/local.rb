@@ -15,6 +15,10 @@ module Cabinet
       File.open(dir + file, 'wb') {|f| f.write(content)} == content.length
     end
 
+    def append(file, content)
+      File.open(dir + file, 'ab') {|f| f.write(content)} == content.length
+    end
+
     def delete(file_or_regexp)
       File.delete *Dir.glob(dir + file_or_regexp)
     end

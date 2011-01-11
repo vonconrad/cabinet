@@ -27,6 +27,11 @@ module Cabinet
       end
     end
 
+    def append(name, new_content)
+      content = exists?(name) ? get(name) + new_content : new_content
+      put(name, content) and !!reload(name)
+    end
+
     def delete(name_or_regexp)
       @file = nil
 
@@ -78,9 +83,13 @@ module Cabinet
         if @file && @file.key == name
           @file
         else
-          container.files.reload
-          @file = container.files.get(name)
+          reload(name)
         end
+      end
+
+      def reload(name)
+        container.files.reload
+        @file = container.files.get(name)
       end
   end
 end
