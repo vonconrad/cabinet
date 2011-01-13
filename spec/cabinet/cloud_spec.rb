@@ -22,6 +22,10 @@ describe Cabinet::Cloud do
     @cc.get(@@file_name).should == @@file_content
   end
 
+  it "should get last modified" do
+    @cc.modified(@@file_name).class.should == Time
+  end
+
   it "should append file" do
     extra_content = Forgery(:lorem_ipsum).text(:paragraph)
     @cc.append(@@file_name, extra_content).should == true

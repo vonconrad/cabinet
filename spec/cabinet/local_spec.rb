@@ -21,6 +21,10 @@ describe Cabinet::Local do
     @cl.get(@@file_name).should == @@file_content
   end
 
+  it "should see last modified" do
+    @cl.modified(@@file_name).class.should == Time
+  end
+
   it "should append file" do
     extra_content = Forgery(:lorem_ipsum).text(:paragraph)
     @cl.append(@@file_name, extra_content).should == true

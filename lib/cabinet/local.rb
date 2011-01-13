@@ -27,6 +27,10 @@ module Cabinet
       File.exists?(dir + file)
     end
 
+    def modified(file)
+      File.mtime(dir + file)
+    end
+
     def gzip(file, content)
       File.open(dir + file, 'w') do |f|
         gz = Zlib::GzipWriter.new(f)

@@ -65,6 +65,10 @@ module Cabinet
       !!file(name)
     end
 
+    def modified(name)
+      file(name).last_modified + 0
+    end
+
     def gzip(name, content)
       name  = name.gsub(/(.+?)(\.gz)?$/, '\1.gz')
       local = "/tmp/#{name}"
