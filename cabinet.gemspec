@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "fog", "~> 0.3.30"
   s.add_development_dependency "rspec", "~> 2.3.0"
   s.add_development_dependency "forgery"
+  s.add_development_dependency "fuubar"
 end
