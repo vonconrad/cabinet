@@ -50,6 +50,20 @@ describe Cabinet::Instance do
     @local.list(/#{@file_content}/).should == []
   end
 
+  it "creates an empty file using put with empty content argument" do
+    file = Forgery(:basic).text
+
+    @local.put(file, nil).should eql(true)
+    @local.get(file).should eql("")
+  end
+
+  it "creates an empty file using touch" do
+    file = Forgery(:basic).text
+
+    @local.touch(file).should eql(true)
+    @local.get(file).should eql("")
+  end
+
   it 'copies files from one cabinet instance to another'
  
   it "should delete file" do
