@@ -92,6 +92,11 @@ describe Cabinet::Instance do
     Zlib::GzipReader.new(StringIO.new(@local.get(gz_file_name))).read.should == @file_content
   end
 
+  it "decompresses files using gzip" do
+    gz_file_name = @file_name + '.gz'
+    @local.decompress(gz_file_name).should == @file_content
+  end
+
   it "should delete file" do
     @local.delete(@file_name).should  == true
     @local.exists?(@file_name).should == false

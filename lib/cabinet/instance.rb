@@ -83,6 +83,10 @@ module Cabinet
       put(name, File.read(tmp)) and (File.unlink(tmp) == 1)
     end
 
+    def decompress(name)
+      Zlib::GzipReader.new(StringIO.new(get(name))).read
+    end
+
     private
       def file(name)
         raise 'No directory specified' unless directory
