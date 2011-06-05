@@ -1,7 +1,11 @@
-require 'pathname'
 require 'fog'
+require 'cabinet/instance'
 
 module Cabinet
+  unless const_defined?(:VERSION)
+    VERSION = '0.2.0'
+  end
+
   def self.cloud(provider, options={})
     self.init(provider, options)
   end
@@ -14,6 +18,3 @@ module Cabinet
     Cabinet::Instance.new(*args)
   end
 end
-
-dir = Pathname(__FILE__).dirname.expand_path
-require dir + 'cabinet/instance'
