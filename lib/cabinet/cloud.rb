@@ -66,7 +66,7 @@ module Cabinet
     end
 
     def modified(name)
-      file(name).last_modified + 0
+      file(name).last_modified + 0 if exists?(name)
     end
 
     def gzip(name, content)

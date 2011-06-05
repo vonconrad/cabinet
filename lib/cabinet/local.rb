@@ -28,7 +28,7 @@ module Cabinet
     end
 
     def modified(file)
-      File.mtime(dir + file)
+      File.mtime(dir + file) if exists?(file)
     end
 
     def gzip(file, content)
