@@ -64,7 +64,15 @@ describe Cabinet::Instance do
     @local.get(file).should eql("")
   end
 
-  it 'copies files from one cabinet instance to another'
+  it "copies files from one cabinet instance to another" do
+    new_local = Cabinet.local
+    new_local.directory = "/tmp/cabinet_test_2"
+
+    @local.copy_to(new_local, @file_name).should == true
+    new_local.get(@file_name).should == @local.get(@file_name)
+
+    new_local.delete(@file_name)
+  end
 
   it "updates last_modified timestamp using touch" do
     original_time    = @local.modified(@file_name)

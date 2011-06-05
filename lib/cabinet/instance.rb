@@ -58,17 +58,8 @@ module Cabinet
       true
     end
 
-    def copy_to(klass_or_sym, name)
-      if klass_or_sym.is_a? Symbol
-        c = case klass_or_sym
-          when :local
-            Local.new('/tmp')
-        end
-      else
-        c = klass_or_sym
-      end
-
-      c.put(name, get(name))
+    def copy_to(klass, name)
+      klass.put(name, get(name))
     end
 
     def exists?(name)
