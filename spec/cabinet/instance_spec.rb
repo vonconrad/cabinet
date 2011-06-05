@@ -2,14 +2,9 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 
 describe Cabinet::Instance do
   before(:all) do
-    credentials = YAML.load_file(File.expand_path(File.join(File.dirname(__FILE__), '..', 'cloud_credentials.yml')))
-
     @local = Cabinet.local
     @local.directory = '/tmp/cabinet_test'
 
-    @cloud = Cabinet.cloud(:rackspace, credentials)
-    @cloud.container = 'cabinet_test'
-    
     @file_name    = Forgery(:basic).text
     @file_content = Forgery(:lorem_ipsum).text(:paragraphs, 10)
   end
@@ -106,5 +101,18 @@ describe Cabinet::Instance do
     (1..3).each {|n| @local.put("#{@file_name}.#{n}", @file_content)}
     @local.delete(/#{@file_name}/)
     (1..3).inject([]) {|arr, n| arr << @local.exists?("#{@file_name}.#{n}")}.should == [false, false, false]
+  end
+
+  it "tests cloud connection" do
+    credentials = YAML.load_file(File.expand_path(File.join(File.dirname(__FILE__), '..', 'cloud_credentials.yml')))
+    cloud = Cabinet.cloud(:rackspace, credentials)
+    cloud.container = 'cabinet_test'
+
+    cloud.put(@file_name, @file_content).should == true
+    cloud.list.should include(@file_name)
+    cloud.list(/#{@file_name}/).should include(@file_name)
+    cloud.get(@file_name).should == @file_content
+    cloud.delete(@file_name).should == true
+    cloud.list.should_not include(@file_name)
   end
 end
