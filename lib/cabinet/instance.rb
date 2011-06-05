@@ -70,17 +70,17 @@ module Cabinet
       file(name).last_modified + 0 if exists?(name)
     end
 
-    def gzip(name, content)
-      name  = name.gsub(/(.+?)(\.gz)?$/, '\1.gz')
-      local = "/tmp/#{name}"
+    def compress(name, content)
+      name = name.gsub(/(.+?)(\.gz)?$/, '\1.gz')
+      tmp  = "/tmp/cabinet-tmp-#{name}-#{Time.now}"
 
-      File.open(local, 'w') do |f|
+      File.open(tmp, 'w') do |f|
         gz = Zlib::GzipWriter.new(f)
         gz.write content
         gz.close
       end
 
-      put(name, File.read(local)) and File.unlink(local)
+      put(name, File.read(tmp)) and (File.unlink(tmp) == 1)
     end
 
     private
