@@ -24,6 +24,8 @@ module Cabinet
     end
 
     def put(name, content)
+      content = content.to_s
+
       begin
         directory.files.create(:key => name, :body => content).content_length == content.length
       rescue
