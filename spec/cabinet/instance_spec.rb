@@ -19,7 +19,7 @@ describe Cabinet::Instance do
   end
 
   it "should create file" do
-    @local.put(@file_name, @file_content).should eql(true)
+    @local.put(@file_name, @file_content).should == true
   end
 
   it "should confirm file exists" do
@@ -53,15 +53,15 @@ describe Cabinet::Instance do
   it "creates an empty file using put with empty content argument" do
     file = Forgery(:basic).text
 
-    @local.put(file, nil).should eql(true)
-    @local.get(file).should eql("")
+    @local.put(file, nil).should == true
+    @local.get(file).should == ""
   end
 
   it "creates an empty file using touch" do
     file = Forgery(:basic).text
 
-    @local.touch(file).should eql(true)
-    @local.get(file).should eql("")
+    @local.touch(file).should == true
+    @local.get(file).should == ""
   end
 
   it "copies files from one cabinet instance to another" do
