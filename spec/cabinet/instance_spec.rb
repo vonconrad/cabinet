@@ -65,7 +65,18 @@ describe Cabinet::Instance do
   end
 
   it 'copies files from one cabinet instance to another'
- 
+
+  it "updates last_modified timestamp using touch" do
+    original_time    = @local.modified(@file_name)
+    original_content = @local.get(@file_name)
+
+    sleep(1) # to force time to pass update
+
+    @local.touch(@file_name).should == true
+    @local.modified(@file_name).should_not == original_time
+    @local.get(@file_name).should == original_content
+  end
+
   it "should delete file" do
     @local.delete(@file_name).should  == true
     @local.exists?(@file_name).should == false

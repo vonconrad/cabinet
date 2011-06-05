@@ -34,7 +34,7 @@ module Cabinet
     end
 
     def touch(name)
-      put(name, "")
+      (exists?(name) ? put(name, get(name)) : put(name, "")) and !!reload(name)
     end
 
     def append(name, new_content)
