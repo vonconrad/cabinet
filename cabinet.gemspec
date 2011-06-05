@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Sebastian von Conrad"]
   s.email       = ["sebastian@vonconrad.com"]
   s.homepage    = "http://github.com/vonconrad/cabinet"
-  s.summary     = %q{}
-  s.description = %q{}
+  s.summary     = %q{Wrapper for local and cloud file handling via fog}
+  s.description = %q{Cabinet is a wrapper for fog to add a simplified way of handling files, both in the cloud and on the local filesystem}
 
   s.rubyforge_project = "cabinet"
 
