@@ -1,27 +1,31 @@
-require 'fog'
-
 module Cabinet
-  class Cloud
-    attr_accessor :connection, :container
+  class Instance
+    attr_accessor :connection, :directory
 
-    def initialize(config)
-      root_dir        = config.delete(:container)
-      self.connection = Fog::Rackspace::Storage.new(config)
-      self.container  = connection.directories.get(root_dir) || connection.directories.create(:key => root_dir)
+    def initialize(provider, auth={})
+      fog_config      = auth.merge({:provider => fog_provider(provider)})
+      self.connection = Fog::Storage.new(fog_config)
     end
+
+    def directory=(name)
+      @directory = connection.directories.get(name) || connection.directories.create(:key => name)
+    end
+
+    alias :container= :directory=
+    alias :bucket=    :directory=
 
     def get(name)
       file(name).body
     end
 
     def list(regexp=/.*/)
-      container.files.reload
-      container.files.select{|f| f.key.match(regexp)}.to_a.map(&:key)
+      directory.files.reload
+      directory.files.select{|f| f.key.match(regexp)}.to_a.map(&:key)
     end
 
     def put(name, content)
       begin
-        container.files.create(:key => name, :body => content).content_length == content.length
+        directory.files.create(:key => name, :body => content).content_length == content.length
       rescue
         false
       end
@@ -35,14 +39,14 @@ module Cabinet
     def delete(name_or_regexp)
       @file = nil
 
-      container.files.reload
+      directory.files.reload
 
       if name_or_regexp.class == Regexp
-        container.files.select{|f| f.key.match(name_or_regexp)}.each do |file|
+        directory.files.select{|f| f.key.match(name_or_regexp)}.each do |file|
           file.destroy
         end
       else
-        container.files.get(name_or_regexp).destroy
+        directory.files.get(name_or_regexp).destroy
       end
 
       true
@@ -84,6 +88,8 @@ module Cabinet
 
     private
       def file(name)
+        raise 'No directory specified' unless directory
+
         if @file && @file.key == name
           @file
         else
@@ -92,8 +98,23 @@ module Cabinet
       end
 
       def reload(name)
-        container.files.reload
-        @file = container.files.get(name)
+        directory.files.reload
+        @file = directory.files.get(name)
+      end
+
+      def fog_provider(provider)
+        case provider.to_s.downcase
+          when 'aws', 's3', 'amazon'
+            'AWS'
+          when 'rackspace', 'cloudfiles', 'cloud_files'
+            'Rackspace'
+          when 'google', 'google_storage'
+            'Google'
+          when 'local', 'localhost', 'filesystem'
+            'Local'
+          else
+            raise ArgumentError, "#{provider} is not a valid provider"
+        end
       end
   end
 end
