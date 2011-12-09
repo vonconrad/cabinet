@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cabinet (0.2.1)
+    cabinet (0.2.2)
       fog (~> 1.1.1)
 
 GEM
