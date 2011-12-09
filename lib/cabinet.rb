@@ -13,7 +13,7 @@ module Cabinet
   def self.local(path='/')
     self.init(:local, {:local_root => path})
   end
-  
+
   def self.init(*args)
     Cabinet::Instance.new(*args)
   end
