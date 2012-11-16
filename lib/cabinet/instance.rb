@@ -1,3 +1,5 @@
+require 'zlib' 
+
 module Cabinet
   class Instance
     attr_accessor :connection, :directory
