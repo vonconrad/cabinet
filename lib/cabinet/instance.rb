@@ -17,7 +17,8 @@ module Cabinet
     alias :bucket=    :directory=
 
     def get(name)
-      file(name).body
+      file = file(name) or raise IOError, "Cannot find a file: #{name}"
+      file.body
     end
 
     def list(regexp=/.*/)

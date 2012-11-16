@@ -29,6 +29,11 @@ describe Cabinet::Instance do
     @local.get(@file_name).should == @file_content
   end
 
+  it "raises an exception if a file cannot be found" do
+    file_name = 'a_file_which_does_not_exist.txt'
+    lambda { @local.get(file_name) }.should raise_exception(IOError, /Cannot find a file: #{file_name}/)
+  end
+
   it "fetches last modified timestamp" do
     @local.modified(@file_name).class.should == Time
   end
